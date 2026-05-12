@@ -14,7 +14,7 @@ export const authLoader = async () => {
   if (error) {
     console.error(error);
     return redirect(
-      "/login?message=Failed to fetch user profile, please login again",
+      "/auth/login?message=Failed to fetch user profile, please login again",
     );
   }
   return data;

@@ -79,7 +79,7 @@ export async function register(data = exampleUserRegister) {
 export async function login(data = exampleUserLogin) {
   try {
     const res = await axios.post("/api/auth/login", data);
-    const token = res.data?.token;
+    const token = res.data?.data?.token;
     if (!token) {
       return {
         data: null,
@@ -114,7 +114,7 @@ export async function getUserProfile(token) {
     const res = await axios.get("/api/auth/me", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const user = res.data?.user;
+    const user = res.data?.data;
     if (!user) {
       return {
         data: user,
