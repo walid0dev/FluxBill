@@ -1,6 +1,6 @@
 import { useActionState } from "react";
 import { login } from "../../api/";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useEffect } from "react";
 export default function LoginPage() {
   const naviagte = useNavigate();
@@ -79,6 +79,12 @@ export default function LoginPage() {
         >
           {!pending ? "Submit" : "..."}
         </button>
+        <p className="text-sm text-muted-foreground">
+          Don&apos;t have an account?{" "}
+          <Link to="/auth/register" className="font-medium text-primary hover:underline">
+            Register
+          </Link>
+        </p>
       </form>
     </section>
   );
