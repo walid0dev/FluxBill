@@ -7,8 +7,8 @@ import {
 } from "react-icons/fi";
 import { useState } from "react";
 import { NavLink } from "react-router";
-import userAuthContext from "../contexts/UserAuthContext"
-import {useContext} from "react"
+import userAuthContext from "../contexts/UserAuthContext";
+import { useContext } from "react";
 
 const links = [
   { to: "/", label: "Dashboard", icon: FiGrid },
@@ -18,7 +18,7 @@ const links = [
 
 const SideBar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const user = useContext(userAuthContext)
+  const user = useContext(userAuthContext);
   return (
     <aside
       onPointerEnter={() => setIsExpanded(true)}
@@ -40,7 +40,7 @@ const SideBar = () => {
                 Personal
               </p>
               <p className="truncate whitespace-nowrap text-sm font-medium text-sidebar-foreground">
-                John Doe
+                {user?.name}
               </p>
             </div>
           )}
@@ -60,7 +60,9 @@ const SideBar = () => {
               }
             >
               <Icon className="text-base opacity-80 transition group-hover:opacity-100" />
-              {isExpanded && <span className="truncate whitespace-nowrap">{label}</span>}
+              {isExpanded && (
+                <span className="truncate whitespace-nowrap">{label}</span>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -72,7 +74,9 @@ const SideBar = () => {
           }`}
         >
           <FiLogOut className="text-base opacity-80" />
-          {isExpanded && <span className="truncate whitespace-nowrap">Logout (soon)</span>}
+          {isExpanded && (
+            <span className="truncate whitespace-nowrap">Logout (soon)</span>
+          )}
         </button>
       </div>
     </aside>

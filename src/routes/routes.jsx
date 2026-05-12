@@ -11,11 +11,12 @@ import {
   SuppliersRoute,
   PublicLayout,
 } from "./index";
-
+import { authLoader } from "./loaders.js";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AuthLayout />,
+    loader: authLoader,
     children: [
       { index: true, element: <DashboardRoute /> },
       { path: "login", element: <LoginRoute /> },
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
+    path: "/auth",
     element: <PublicLayout />,
     children: [
       { path: "login", element: <LoginRoute /> },
