@@ -1,0 +1,33 @@
+{
+  "status": "success",
+  "data": {
+    "totalSuppliers": 3,
+    "totalInvoices": 8,
+    "totalAmount": 1922,
+    "totalPaid": 2306,
+    "totalRemaining": -384,
+    "overdueCount": 0,
+    "overdueAmount": 0,
+    "invoicesByStatus": {
+      "unpaid": 5,
+      "partially_paid": 2,
+      "paid": 1,
+      "overdue": 0
+    },
+    "topSuppliers": [
+      {
+        "totalInvoices": 6,
+        "totalAmount": 1722,
+        "id": "69d64d51f2888daab91385e0",
+        "name": "Acme Supply Co Updated"
+      },
+      {
+        "totalInvoices": 2,
+        "totalAmount": 200,
+        "id": "69d902f8d02789c08b0d1a76",
+        "name": "Auer - Brakus"
+      }
+    ]
+  }
+}
+
