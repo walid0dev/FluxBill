@@ -81,7 +81,7 @@ console.log("STATUS SENT TO API:", status);
         {/* Top row */}
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-gray-900">
-            ${invoice.amount}
+           Montant: {invoice.amount} DH
           </h2>
 
           {/* Status badge */}
