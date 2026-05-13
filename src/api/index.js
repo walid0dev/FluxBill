@@ -136,5 +136,30 @@ export async function getUserProfile(token) {
     }
   }
 }
+export async function getInvoices(token, status ) {
+  try {
+    const res = await axios.get("/api/invoices", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: 
+        status? { status } : {},
+      
+    });
 
-export default { register, login, getUserProfile };
+    return {
+      data: res.data.data,
+      error: null,
+    };
+  } catch (e) {
+    return {
+      data: null,
+      error: {
+        message: e.response?.data?.message || "Request failed",
+        status: e.response?.status || 500,
+      },
+    };
+  }
+}
+
+export default { register, login, getUserProfile,getInvoices };
