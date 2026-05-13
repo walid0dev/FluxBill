@@ -161,5 +161,47 @@ export async function getInvoices(token, status ) {
     };
   }
 }
+export  async function getInvoiceById(token,id) {
+  try{
+    const res=await axios.get(`/api/invoices/${id}`,{
 
-export default { register, login, getUserProfile,getInvoices };
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return {data:res.data.data.invoice, error:null}
+  }
+  catch(e){
+    return{
+      data:null,
+      error:{message:e.message,status:500}
+    }
+  }
+  
+}
+export async function addPayement(token,id,data) {
+
+  try{
+      const res=await axios.post(`/api/${id}/payments`,
+        data,
+        {
+          headers:{
+            Authorization:`Bearer ${token}`
+          }
+          
+        }
+      )
+return{data:res.data.data, error:null}
+
+  }
+  catch(e){
+    return{
+      data:null,
+      error:{message:e.message, status:500}
+    }
+  }
+  
+}
+
+
+export default { register, login, getUserProfile,getInvoices,getInvoiceById,addPayement };

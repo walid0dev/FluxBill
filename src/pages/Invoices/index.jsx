@@ -73,11 +73,15 @@ console.log("STATUS SENT TO API:", status);
 
   {/* Grid */}
   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    
     {invoices.map((invoice) => (
+      
+      
       <div
         key={invoice._id || invoice.id}
         className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5"
       >
+        
         {/* Top row */}
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-gray-900">
@@ -106,7 +110,7 @@ console.log("STATUS SENT TO API:", status);
         {/* Action */}
         <div className="mt-5">
           <Link
-            to={`/invoices/${invoice._id || invoice.id}`}
+           to={`/invoices/${invoice._id || invoice.id}`}
             className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
           >
             View details →
