@@ -50,24 +50,55 @@ export default function InvoiceDetailsPage() {
   return (
     <section className="p-6 space-y-6">
       {/* HEADER */}
-      <div>
-        <h1 className="text-2xl font-bold">
-          Invoice #{invoice?._id || invoice?._id}
-        </h1>
+     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 space-y-6">
+  <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 className="text-3xl font-bold text-gray-900">
+        Invoice #{invoice?._id}
+      </h1>
 
-        <p className="text-gray-500">Status: {invoice?.status}</p>
-        <div className="border rounded p-4 space-y-2">
-        <p>
-          <b>Supplier:</b> {invoice.supplierName || "N/A"}
-        </p>
-        <p>
-          <b>Amount:</b> {invoice.amount} Dh
-        </p>
-        <p>
-          <b>Date:</b> {new Date(invoice.dueDate).toLocaleDateString()}
-        </p>
-      </div>
-      </div>
+      <p className="mt-1 text-sm text-gray-500">
+        Invoice details and payment information
+      </p>
+    </div>
+
+    <span
+      className={`w-fit px-4 py-1.5 rounded-full text-sm font-medium
+      ${
+        invoice?.status === "paid"
+          ? "bg-green-100 text-green-700"
+          : invoice?.status === "pending"
+          ? "bg-yellow-100 text-yellow-700"
+          : "bg-red-100 text-red-700"
+      }`}
+    >
+      {invoice?.status}
+    </span>
+  </div>
+
+  <div className="grid gap-4 sm:grid-cols-3">
+    <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+      <p className="text-sm text-gray-500">Supplier</p>
+      <h3 className="mt-1 font-semibold text-gray-800">
+        {invoice?.supplierName || "N/A"}
+      </h3>
+    </div>
+
+    <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+      <p className="text-sm text-gray-500">Amount</p>
+      <h3 className="mt-1 font-semibold text-gray-800">
+        {invoice?.amount} Dh
+      </h3>
+    </div>
+
+    <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+      <p className="text-sm text-gray-500">Due Date</p>
+      <h3 className="mt-1 font-semibold text-gray-800">
+        {new Date(invoice?.dueDate).toLocaleDateString()}
+      </h3>
+    </div>
+  </div>
+</div>
 
       {/* INFO */}
       {/* <div className="border rounded p-4 space-y-2">
