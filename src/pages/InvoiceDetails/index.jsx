@@ -45,6 +45,8 @@ export default function InvoiceDetailsPage() {
   if (loading) return <p className="p-6">Loading...</p>;
   if (!invoice) return <p className="p-6">Invoice not found</p>;
   console.log("ID FROM URL:", id);
+  console.log("invoicee",invoice);
+  
   return (
     <section className="p-6 space-y-6">
       {/* HEADER */}
@@ -56,7 +58,7 @@ export default function InvoiceDetailsPage() {
         <p className="text-gray-500">Status: {invoice?.status}</p>
         <div className="border rounded p-4 space-y-2">
         <p>
-          <b>Supplier:</b> {invoice.supplier?.name || "N/A"}
+          <b>Supplier:</b> {invoice.supplierName || "N/A"}
         </p>
         <p>
           <b>Amount:</b> {invoice.amount} Dh
