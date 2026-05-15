@@ -26,15 +26,37 @@ export default function InvoiceDetailsPage() {
     setLoading(false);
   }
 
-  async function handlePayment(e) {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
+async function handlePayment(e) {
+  e.preventDefault();
+
+  if (!amount || Number(amount) <= 0) {
+    alert("Please enter a valid amount");
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+
+  try {
+    // On envoie un objet complet pour satisfaire le validateur (Erreur 422)
     await addPayement(token, id, {
       amount: Number(amount),
+      note: "Paiement Facture", // Ajout d'une note par défaut si elle est obligatoire
+      invoiceId: id            // Ajout de l'ID au cas où le schéma le réclame dans le body
     });
-    setAmount("");
-    fetchInvoice();
+
+    // Si le serveur répond 201 (Succès) :
+    setAmount("");       // On vide le champ
+    await fetchInvoice(); // On rafraîchit les paiements et le statut à l'écran
+    
+  } catch (error) {
+    
+    console.error("Erreur reçue du serveur :", error.response?.data);
+    
+    
+    const serverMessage = error.response?.data?.message || "Validation failed";
+    alert(`Erreur : ${serverMessage}`);
   }
+}
 
   useEffect(() => {
     fetchInvoice();
@@ -99,53 +121,84 @@ export default function InvoiceDetailsPage() {
     </div>
   </div>
 </div>
-
-      {/* INFO */}
-      {/* <div className="border rounded p-4 space-y-2">
-        <p>
-          <b>Supplier:</b> {invoice.supplier?.name || "N/A"}
-        </p>
-        <p>
-          <b>Amount:</b> ${invoice.amount}
-        </p>
-        <p>
-          <b>Date:</b> {new Date(invoice.dueDate).toLocaleDateString()}
-        </p>
-      </div> */}
-
       {/* PAYMENTS LIST */}
-      {/* <div>
-        <h2 className="font-semibold mb-2">Payments</h2>
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 space-y-5">
+  <div className="flex items-center justify-between">
+    <h2 className="text-2xl font-bold text-gray-900">
+      Payments
+    </h2>
 
-        {invoice.payments?.length === 0 ? (
-          <p className="text-gray-500">No payments yet</p>
-        ) : (
-          <ul className="space-y-2">
-            {invoice.payments.map((p, i) => (
-              <li key={i} className="border p-2 rounded">
-                ${p.amount} - {new Date(p.date).toLocaleDateString()}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> */}
+    <span className="px-3 py-1 rounded-full bg-gray-100 text-sm font-medium text-gray-700">
+      {invoice.payments?.length || 0} Payments  
+    </span>
+    {/* accéder à length seulement si invoice.payments existe */}
+  </div>
 
-      {/* ADD PAYMENT */}
-      {/* <form onSubmit={handlePayment} className="space-y-2">
-        <h2 className="font-semibold">Add Payment</h2>
+  {invoice.payments?.length === 0 ? (
+    <div className="border border-dashed border-gray-300 rounded-xl py-10 text-center">
+      <p className="text-gray-500">No payments yet</p>
+    </div>
+  ) : (
+    <ul className="space-y-3">
+      {invoice.payments.map((p, i) => (
+        <li
+          key={i}
+          className="flex items-center justify-between border border-gray-100 rounded-xl p-4 hover:bg-gray-50 transition"
+        >
+          <div>
+            <p className="text-sm text-gray-500">
+              Payment Date
+            </p>
 
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter amount"
-          className="border p-2 rounded w-full"
-        />
+            <p className="font-medium text-gray-800">
+              {new Date(p.createdAt).toLocaleDateString()}
+            </p>
+          </div>
 
-        <button className="bg-black text-white px-4 py-2 rounded">
-          Add Payment
-        </button>
-      </form> */}
+          <h3 className="text-lg font-bold text-green-600">
+            {p.amount} DH
+          </h3>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+     {/* ADD PAYMENT */}
+<form
+  onSubmit={handlePayment}
+  className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 space-y-5"
+>
+  <div>
+    <h2 className="text-2xl font-bold text-gray-900">
+      Add Payment
+    </h2>
+
+    <p className="text-sm text-gray-500 mt-1">
+      Register a new payment for this invoice
+    </p>
+  </div>
+
+  <div className="space-y-2">
+    <label className="text-sm font-medium text-gray-700">
+      Payment Amount
+    </label>
+
+    <input
+      type="number"
+      value={amount}
+      onChange={(e) => setAmount(e.target.value)}
+      placeholder="Enter amount"
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:ring-2 focus:ring-black focus:border-black transition"
+    />
+  </div>
+
+  <button
+    className="w-full sm:w-auto bg-black text-white font-medium px-5 py-3 rounded-xl hover:bg-gray-800 transition"
+  >
+    Add Payment
+  </button>
+</form>
     </section>
   );
 }

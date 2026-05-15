@@ -181,25 +181,14 @@ export  async function getInvoiceById(token,id) {
 }
 export async function addPayement(token,id,data) {
 
-  try{
-      const res=await axios.post(`/api/${id}/payments`,
-        data,
-        {
-          headers:{
-            Authorization:`Bearer ${token}`
-          }
-          
-        }
-      )
-return{data:res.data.data, error:null}
-
-  }
-  catch(e){
-    return{
-      data:null,
-      error:{message:e.message, status:500}
+ const res = await axios.post(`/api/payments/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
-  }
+  });
+  
+  // Tu renvoies directement la réponse
+  return res.data;
   
 }
 
