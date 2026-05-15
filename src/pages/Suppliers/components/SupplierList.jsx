@@ -4,8 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import supplier from "../apiGet";
 import userAuthContext from "../../../contexts/UserAuthContext";
+import Supplier from "./SupplierCard";
 
-export default function SupplierList() {
+export default function SupplierList({setSelected }) {
   const [suppliers, setSuppliers] = useState([]);
   const [loding, setLoding] = useState(true);
 
@@ -28,8 +29,10 @@ export default function SupplierList() {
         setLoding(false);
       });
   }, [token]);
-  console.log(supplier.contact);
+  // console.log(supplier.contact);
   // console.log(suppliers);
+  // console.log(suppliers);
+  
   
 
   return (
@@ -53,23 +56,7 @@ export default function SupplierList() {
             </tr>
           ) : (
             suppliers.map((supplier) => (
-              <tr key={supplier.id} className="text-center">
-                <td className="border border-gray-300 p-2">{supplier.name}</td>
-
-                <td className="border border-gray-300 p-2">{supplier.email}</td>
-
-                <td className="border border-gray-300 p-2">{supplier.phone}</td>
-
-                <td className="border border-gray-300 p-2">{supplier.contact} </td>
-
-                <td className="border border-gray-300 p-2">
-                  <div className="flex gap-4 justify-center">
-                    <i className="fa-regular fa-eye cursor-pointer text-blue-500"></i>
-                    <i className="fa-solid fa-pen cursor-pointer text-blue-500"></i>
-                    <i className="fa-solid fa-trash cursor-pointer text-red-500"></i>
-                  </div>
-                </td>
-              </tr>
+              <Supplier key={supplier.id} supplier={supplier} setSelected={setSelected} />
             ))
           )}
         </tbody>
@@ -77,3 +64,5 @@ export default function SupplierList() {
     </div>
   );
 }
+
+

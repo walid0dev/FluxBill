@@ -1,13 +1,19 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import userAuthContext from "../../contexts/UserAuthContext";
-import { useNavigate } from "react-router";
 import SupplierList from "./components/SupplierList";
-import { formContext, FormContextprovider } from "./context";
+import { FormContextprovider } from "./context";
 import { Button } from "./components/Button";
 import ButtonAjouterSuppliers from "./components/ButtonAjouterSupplier";
+import { SupplierEditProvider } from "./contexts/SupplierEditContext";
+import { EditForm } from "./components/editForm";
+import FormView from "./components/FormView";
+
 export default function SuppliersPage() {
+  const [selected, setSelected] = useState(null);
+
   const user = useContext(userAuthContext);
   const token = localStorage.getItem("token");
+
   return (
     <FormContextprovider>
       <section>
@@ -16,7 +22,13 @@ export default function SuppliersPage() {
           <Button />
         </div>
 
-        <SupplierList />
+        <SupplierEditProvider>
+          <EditForm />
+          <SupplierList setSelected={setSelected} />
+        </SupplierEditProvider>
+
+        <FormView selected={selected} setSelected={setSelected} />
+
         <ButtonAjouterSuppliers />
       </section>
     </FormContextprovider>
