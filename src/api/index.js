@@ -191,6 +191,27 @@ export async function addPayement(token,id,data) {
   return res.data;
   
 }
+export async function addInvoice(token,data){
+
+  try {const res=await axios.post("/api/invoices",data,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+  return { data:res.data.data,
+            error:null,
+  }}
+  catch(e){
+     return{
+        data:null,
+        error:{
+          message:e.message,status:500
+        }
+     }
+  }
 
 
-export default { register, login, getUserProfile,getInvoices,getInvoiceById,addPayement };
+}
+
+
+export default { register, login, getUserProfile,getInvoices,getInvoiceById,addPayement,addInvoice };
