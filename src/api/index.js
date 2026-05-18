@@ -136,5 +136,82 @@ export async function getUserProfile(token) {
     }
   }
 }
+export async function getInvoices(token, status ) {
+  try {
+    const res = await axios.get("/api/invoices", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: 
+        status? { status } : {},
+      
+    });
 
-export default { register, login, getUserProfile };
+    return {
+      data: res.data.data,
+      error: null,
+    };
+  } catch (e) {
+    return {
+      data: null,
+      error: {
+        message: e.response?.data?.message || "Request failed",
+        status: e.response?.status || 500,
+      },
+    };
+  }
+}
+export  async function getInvoiceById(token,id) {
+  try{
+    const res=await axios.get(`/api/invoices/${id}`,{
+
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return {data:res.data.data.invoice, error:null}
+  }
+  catch(e){
+    return{
+      data:null,
+      error:{message:e.message,status:500}
+    }
+  }
+  
+}
+export async function addPayement(token,id,data) {
+
+ const res = await axios.post(`/api/payments/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  
+  // Tu renvoies directement la réponse
+  return res.data;
+  
+}
+export async function addInvoice(token,data){
+
+  try {const res=await axios.post("/api/invoices",data,{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+  return { data:res.data.data,
+            error:null,
+  }}
+  catch(e){
+     return{
+        data:null,
+        error:{
+          message:e.message,status:500
+        }
+     }
+  }
+
+
+}
+
+
+export default { register, login, getUserProfile,getInvoices,getInvoiceById,addPayement,addInvoice };
