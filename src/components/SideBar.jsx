@@ -17,7 +17,7 @@ const links = [
 ];
 
 const SideBar = () => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const user = useContext(userAuthContext);
   return (
     <aside

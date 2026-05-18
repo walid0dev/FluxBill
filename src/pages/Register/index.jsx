@@ -1,7 +1,6 @@
 import { useActionState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
 import { register } from "../../api/";
-
 export default function RegisterPage() {
   const navigate = useNavigate();
   const handleSubmit = async (prevState, formData) => {
