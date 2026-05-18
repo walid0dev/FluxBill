@@ -1,16 +1,11 @@
-import { Link } from "react-router-dom";
-import { Eye, Edit, Trash2 } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import supplier from "../apiGet";
-import userAuthContext from "../../../contexts/UserAuthContext";
 import Supplier from "./SupplierCard";
 
-export default function SupplierList({setSelected }) {
+export default function SupplierList({ setSelected }) {
   const [suppliers, setSuppliers] = useState([]);
   const [loding, setLoding] = useState(true);
 
-  const user = useContext(userAuthContext);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -32,8 +27,6 @@ export default function SupplierList({setSelected }) {
   // console.log(supplier.contact);
   // console.log(suppliers);
   // console.log(suppliers);
-  
-  
 
   return (
     <div className="p-6">
@@ -56,7 +49,11 @@ export default function SupplierList({setSelected }) {
             </tr>
           ) : (
             suppliers.map((supplier) => (
-              <Supplier key={supplier.id} supplier={supplier} setSelected={setSelected} />
+              <Supplier
+                key={supplier.id}
+                supplier={supplier}
+                setSelected={setSelected}
+              />
             ))
           )}
         </tbody>
@@ -64,5 +61,3 @@ export default function SupplierList({setSelected }) {
     </div>
   );
 }
-
-
